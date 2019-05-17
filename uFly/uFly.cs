@@ -1,22 +1,19 @@
-﻿using Rocket.Core.Plugins;
-using Rocket.Unturned.Events;
-using Rocket.Unturned.Player;
-using System;
+﻿using Rocket.Unturned.Player;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Numerics;
 using System.Threading.Tasks;
-using UnityEngine;
+using Rocket.Core.Logging;
+using Rocket.Core.Plugins;
 
 namespace uFly
 {
-    public class uFly : RocketPlugin
+    public class uFly : Plugin
     {
         public List<UnturnedPlayer> playersFlying = new List<UnturnedPlayer>();
 
-        protected override void Load()
+        protected override async Task OnActivate(bool isFromReload)
         {
-            UnturnedPlayerEvents.OnPlayerUpdateGesture += UnturnedPlayerEvents_OnPlayerUpdateGesture;
+            Logger.LogInformation("[uFly] Activated");
         }
 
         public void UnturnedPlayerEvents_OnPlayerUpdateGesture(UnturnedPlayer player, UnturnedPlayerEvents.PlayerGesture gesture)
@@ -50,9 +47,9 @@ namespace uFly
             }
         }
 
-        protected override void Unload()
+        protected override async Task OnDeactivate()
         {
-            UnturnedPlayerEvents.OnPlayerUpdateGesture -= UnturnedPlayerEvents_OnPlayerUpdateGesture;
+            Logger.LogInformation("[uFly] Deactivating");
         }
     }
 }
